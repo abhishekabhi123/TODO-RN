@@ -1,30 +1,27 @@
-import { StyleSheet, Text, TouchableOpacity, View } from "react-native";
+import { createHomeStyles } from "@/assets/styles/home.styles";
+import { LinearGradient } from "expo-linear-gradient";
+import { StatusBar, Text, TouchableOpacity } from "react-native";
+import { SafeAreaView } from "react-native-safe-area-context";
+import Header from "../components/Header";
 import useTheme from "../hooks/useTheme";
 
 export default function Index() {
-  const { toggleDarkMode } = useTheme();
+  const { toggleDarkMode, colors } = useTheme();
+
+  const homeStyles = createHomeStyles(colors);
   return (
-    <View
-      style={{
-        flex: 1,
-        justifyContent: "center",
-        alignItems: "center",
-      }}
+    <LinearGradient
+      colors={colors.gradients.background}
+      style={homeStyles.container}
     >
-      <Text>This is the index page </Text>
-      <TouchableOpacity style={styles.button} onPress={toggleDarkMode}>
-        <Text>Toggle dark</Text>
-      </TouchableOpacity>
-    </View>
+      <StatusBar barStyle={colors.statusBarStyle} />
+      <SafeAreaView style={homeStyles.safeArea}>
+        <Header />
+
+        <TouchableOpacity onPress={toggleDarkMode}>
+          <Text>Toggle Dark Mode</Text>
+        </TouchableOpacity>
+      </SafeAreaView>
+    </LinearGradient>
   );
 }
-
-const styles = StyleSheet.create({
-  button: {
-    borderRadius: 5,
-    padding: 5,
-    margin: 5,
-    backgroundColor: "white",
-    color: "red",
-  },
-});
